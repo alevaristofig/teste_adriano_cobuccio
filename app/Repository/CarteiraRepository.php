@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Http\Requests\DepositoRequest;
+use App\Http\Requests\CarteiraRequest;
 use App\Models\Carteira;
 
 interface CarteiraRepository {

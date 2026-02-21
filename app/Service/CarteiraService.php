@@ -3,15 +3,26 @@
 namespace App\Service;
 
 use App\Models\Carteira;
+use App\Http\Requests\CarteiraRequest;
 
 class CarteiraService implements CarteiraRepository {
     private $model;
 
-    public function __construct(Carteira $carteira) {
+    public function __construct(Carteira $carteira) 
+    {
         $this->model = $carteira;
     }
 
-    public function depositar(DepositoRequest $request): Carteira 
+    public function salvar(CarteiraRequest $request): Carteira 
+    {
+        try {                                
+            return $this->model->create($request->all());             
+        } catch(\Exception $e) {
+            throw new Exception($e->getMessage);
+        }
+    }
+
+   /* public function depositar(DepositoRequest $request): Carteira 
     {
         try {
             return $model->create($request->all());
@@ -43,5 +54,5 @@ class CarteiraService implements CarteiraRepository {
     {
         //pegar os dados da sessao
         return $this->model->where('id',id)->where('numero',numero)->get();
-    }
+    }*/
 }

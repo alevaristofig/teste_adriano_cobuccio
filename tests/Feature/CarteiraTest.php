@@ -12,72 +12,105 @@ use App\Models\Carteira;
 
 class CarteiraTest extends TestCase
 {
-    public function test_depositar(): void
+    public function test_InserirCarteiraSucesso(): void 
     {
+
         $dados = [
             'user_id' => 1,
-            'numero' => 001,
-            'valor' => 100.00,
-            'status' => 'Aprovado'            
+            'numero' => 1,
+            'titular' => "Alexandre Figueiredo",
+            'saldo' => 100            
         ];
 
         $mock = Mockery::mock('alias:' . CarteiraService::class);
-
-        $mock->shouldReceive('depositar')
+        $mock->shouldReceive('salvar')
             ->once()
             ->with($dados)
             ->andReturn((object) $dados);
 
-        $result = CarteiraService::depositar($dados);
+        $result = CarteiraService::salvar($dados);
 
-        $this->assertEquals(100.00,$result->valor);
-        $this->assertEquals(1,$result->user_id);
+        $this->assertEquals(100,$result->saldo);
+        $this->assertEquals("Alexandre Figueiredo",$result->titular);
     }
 
-    public function test_transferir(): void 
+    public function test_BuscarCarteiraSucesso(): void 
     {
+
         $id = 1;
-
         $dados = [
+            'id' => 1,
             'user_id' => 1,
             'numero' => 1,
-            'valor' => 50.00,
-            'status' => 'Aprovado'            
-        ];
-
-        $dadosSaldo = [
-            'user_id' => 1,
-            'numero' => 1,
-        ];
-
-        $dadosResultSaldo = [
-            'valor' => 100
+            'titular' => "Alexandre Figueiredo",
+            'saldo' => 100            
         ];
 
         $mock = Mockery::mock('alias:' . CarteiraService::class);
-
         $mock->shouldReceive('buscar')
-            ->once()
-            ->with($dadosSaldo)
-            ->andReturn((object) $dadosResultSaldo);
-
-        $result = CarteiraService::buscar($dados);
-
-        $dados['valor'] = $dados['valor'] - $dadosResultSaldo['valor'];
-
-        $mock2 = Mockery::mock('alias:' . Carteira::class);
-
-        $mock2->shouldReceive('create')
-            ->once()
-            ->with($id)
+            ->once()    
+            ->with($id)        
             ->andReturn((object) $dados);
 
-        $result = Carteira::create($dados);
+       $result = CarteiraService::buscar($id);
 
-        $this->assertEquals(50.00,$result->valor);
+        $this->assertEquals(1,$result->id);
         $this->assertEquals(1,$result->user_id);
     }
 
-     public function test_constestar(): void 
-     {}
+    public function test_AtualizarPedidoSucesso(): void 
+    {
+        $id = 1;
+        $dados = [
+            'id' => 1,
+            'user_id' => 1,
+            'numero' => 1,
+            'titular' => "Alexandre Figueiredo",
+            'saldo' => 100            
+        ];
+
+        $mock = Mockery::mock('alias:' . CarteiraService::class);
+        $mock->shouldReceive('buscar')
+            ->once()    
+            ->with($id)        
+            ->andReturn((object) $dados);
+
+        $carteiraUpdate = CarteiraService::buscar($id);
+        
+        $carteiraUpdate->saldo = 120;
+        $carteiraUpdate->titular = "Alexandre Evaristo Figueiredo";       
+
+        $mock->shouldReceive('atualizar')
+            ->once()
+            ->with($carteiraUpdate)
+            ->andReturn((object) $carteiraUpdate);
+
+        $result = CarteiraService::atualizar($carteiraUpdate);
+        
+        $this->assertEquals(120,$result->saldo);    
+        $this->assertEquals("Alexandre Evaristo Figueiredo",$result->titular);    
+    }
+
+    public function test_DeletarCarteiraSucesso(): void 
+    {
+        $id = 1;
+        $carteira = new Carteira();
+
+        $mock = Mockery::mock('alias:' . CarteiraService::class);
+        $mock->shouldReceive('buscar')
+            ->once()    
+            ->with($id)        
+            ->andReturn($carteira);
+
+        $carteiraDel = CarteiraService::buscar($id);        
+
+        $mock->shouldReceive('remover')
+            ->once()
+            ->with($id)
+            ->andReturnTrue();
+
+        $result = CarteiraService::remover($id);
+       
+        $this->assertTrue($result);                
+    }
 }
