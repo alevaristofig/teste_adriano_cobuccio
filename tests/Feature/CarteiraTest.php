@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Mockery;
 
+use App\Service\CarteiraService;
+
 class CarteiraTest extends TestCase
 {
     /**
@@ -21,16 +23,16 @@ class CarteiraTest extends TestCase
             'status' => 'Aprovado'            
         ];
 
-        $mock = Mockery::mock('alias:' . Carteira::class);
+        $mock = Mockery::mock('alias:' . CarteiraService::class);
 
-        $mock->shouldReceive('create')
+        $mock->shouldReceive('depositar')
             ->once()
             ->with($dados)
             ->andReturn((object) $dados);
 
-        $result = Carteira::depositar($dados);
+        $result = CarteiraService::depositar($dados);
 
         $this->assertEquals(100.00,$result->valor);
-        $this->assertEquals(1,$result->fornecedor_id);
+        $this->assertEquals(1,$result->user_id);
     }
 }

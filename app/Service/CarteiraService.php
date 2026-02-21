@@ -10,4 +10,12 @@ class CarteiraService implements CarteiraRepository {
     public function __construct(Carteira $carteira) {
         $this->model = $carteira;
     }
+
+    public function depositar(DepositoRequest $request): Carteira {
+        try {
+            return $model->create($request->all());
+        } catch(\Exception $e) {
+            throw new Exception($e->getMessage);
+        }
+    }
 }
