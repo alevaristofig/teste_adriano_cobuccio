@@ -24,8 +24,8 @@ class CarteiraRequest extends FormRequest
         return [
             'user_id' => 'required',
             'numero' => 'required',
-            'valor' => 'required',
-            'status' => 'required'  
+            'titular' => 'required',
+            'saldo' => 'required'  
         ];
     }
 }
