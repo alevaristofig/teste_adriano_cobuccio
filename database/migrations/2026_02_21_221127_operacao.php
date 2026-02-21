@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carteira', function (Blueprint $table) {
+        Schema::create('operacao', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('numero');
-            $table->string('titular');
-            $table->double('saldo');
+            $table->unsignedBigInteger('carteira_id'); 
+
+            $table->string('descricao');
+            $table->string('status');
+            $table->double('valor');            
             
             $table->timestamps();
+
+            $table->foreign('carteira_id')->references('id')->on('carteira');
         });
     }
 
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carteira');
+        //
     }
 };

@@ -77,4 +77,7 @@ class CarteiraTest extends TestCase
         $this->assertEquals(50.00,$result->valor);
         $this->assertEquals(1,$result->user_id);
     }
+
+     public function test_constestar(): void 
+     {}
 }
