@@ -22,6 +22,11 @@ class OperacaoRepositoryImpl implements OperacaoRepository
         $this->model->modelOperacao->where('carteira_id', $carteira_id);
     }
 
+    public function buscar(int $id): Operacao 
+    {
+        return  $this->model->modelOperacao->find($id);
+    }
+
     public function depositar(array $dados): Operacao 
     {
        return $this->model->create($dados);

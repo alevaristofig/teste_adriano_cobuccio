@@ -20,6 +20,11 @@ class OperacaoService
         return $this->repositorio->listar($carteira_id);
     }
 
+    public function buscar(int $id): Operacao 
+    {
+        return $this->repositorio->buscar($id);
+    }
+
     public function depositar(array $dados): Operacao 
     {
         try {

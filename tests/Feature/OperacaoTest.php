@@ -115,4 +115,32 @@ class OperacaoTest extends TestCase
         $this->assertEquals(100.00,$result->valor);
         $this->assertEquals(1,$result->carteira_id);
     }
+
+    public function test_buscar(): void 
+    {
+        $id = 1;
+
+        $dados = [
+            'carteira_id' => 1,
+            'descricao' => "transferência",
+            'valor' => 100.00,
+            'status' => 'Aprovado'            
+        ];
+
+        $mock = Mockery::mock(OperacaoRepository::class);
+
+        $mock->shouldReceive('buscar')
+                ->once()
+                ->with($id)
+                ->andReturn(new Operacao($dados));
+
+        $this->app->instance(OperacaoRepository::class, $mock);
+
+        $service = app(OperacaoService::class);
+
+        $result = $service->buscar($id);
+
+        $this->assertEquals("transferência",$result->descricao);
+        $this->assertEquals("Aprovado",$result->status);
+    }
 }
