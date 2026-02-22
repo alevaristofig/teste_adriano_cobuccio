@@ -71,6 +71,7 @@ class CarteiraTest extends TestCase
     public function test_AtualizarPedidoSucesso(): void 
     {
         $id = 1;
+
         $dados = [
             'id' => 1,
             'user_id' => 1,
@@ -79,13 +80,18 @@ class CarteiraTest extends TestCase
             'saldo' => 100            
         ];
 
-        $mock = Mockery::mock('alias:' . CarteiraService::class);
+        $mock = Mockery::mock(CarteiraRepository::class);
+
         $mock->shouldReceive('buscar')
             ->once()    
             ->with($id)        
-            ->andReturn((object) $dados);
+            ->andReturn(new Carteira($dados));
 
-        $carteiraUpdate = CarteiraService::buscar($id);
+        $this->app->instance(CarteiraRepository::class, $mock);
+
+        $service = app(CarteiraService::class);
+
+        $carteiraUpdate = $service->buscar($id);
         
         $carteiraUpdate->saldo = 120;
         $carteiraUpdate->titular = "Alexandre Evaristo Figueiredo";       
@@ -93,12 +99,12 @@ class CarteiraTest extends TestCase
         $mock->shouldReceive('atualizar')
             ->once()
             ->with($carteiraUpdate)
-            ->andReturn((object) $carteiraUpdate);
+            ->andReturn(new Carteira($carteiraUpdate));
 
-        $result = CarteiraService::atualizar($carteiraUpdate);
+        $resultUpdate = $service->atualizar($carteiraUpdate);
         
-        $this->assertEquals(120,$result->saldo);    
-        $this->assertEquals("Alexandre Evaristo Figueiredo",$result->titular);    
+        $this->assertEquals(120,$resultUpdate->saldo);    
+        $this->assertEquals("Alexandre Evaristo Figueiredo",$resultUpdate->titular);    
     }
 
     public function test_DeletarCarteiraSucesso(): void 

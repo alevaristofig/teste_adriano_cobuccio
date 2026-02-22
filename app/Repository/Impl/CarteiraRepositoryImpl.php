@@ -23,4 +23,18 @@ class CarteiraRepositoryImpl implements CarteiraRepository
     {
         return $this->model->find($id);
     }
+
+    public function atualizar(int $id, array $dados): Carteira 
+    {
+        $carteira = $this->model->find($id);
+
+        //verificar se tem operações com o numero da carteira
+        $carteira->numero = $dados->numero; 
+        $carteira->titular = $dados->titular;  
+        $carteira->saldo = $dados->saldo;  
+
+        $carteira->save();
+
+        return $carteira;
+    }
 }

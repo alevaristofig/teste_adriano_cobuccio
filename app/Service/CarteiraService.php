@@ -32,27 +32,16 @@ class CarteiraService {
         }
     }
 
-    /*public function atualizar(int $id, CarteiraRequest $request): Carteira 
+    public function atualizar(int $id, array $dados): Carteira 
     {
-        try {
-            $carteira = $this->model->find($id);
-
-            //verificar se tem operações com o numero da carteira
-            $carteira->numero = $request->numero; 
-            $carteira->titular = $request->titular;  
-            $carteira->saldo = $request->saldo;  
-
-            $carteira->save();
-
-
-            return $carteira;
-
+        try {            
+            return $this->repository->atualizar($id,$dados);
         } catch(\Exception $e) {
             throw new Exception($e->getMessage);
         }
     }
 
-    public function deletar(int $id): boolean 
+ /*   public function deletar(int $id): boolean 
     {
         try {
             $carteira = $this->model->find($id);
