@@ -98,9 +98,5 @@ class CarteiraService implements CarteiraRepository {
         }
     }
 
-    private function buscarCarteira(int $id, int $numero): int 
-    {
-        //pegar os dados da sessao
-        return $this->model->where('id',id)->where('numero',numero)->get();
-    }*/
+   */
 }

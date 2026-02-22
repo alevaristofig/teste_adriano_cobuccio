@@ -6,8 +6,8 @@ use App\Http\Requests\CarteiraRequest;
 use App\Models\Carteira;
 
 interface CarteiraRepository {
-    /*public function depositar(CarteiraRequest $request): Carteira;
-    public function transferir(CarteiraRequest $request): Carteira;
+    /*
+   
     public function constestar(CarteiraRequest $request): String;*/
 
     public function salvar(CarteiraRequest $request): Carteira;

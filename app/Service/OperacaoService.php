@@ -23,4 +23,13 @@ class OperacaoService
             throw new \RuntimeException('Erro ao processa depósito');
         }
     }
+
+    public function transferir(array $dados): bool 
+    {
+        try {                              
+            return $this->repositorio->transferir($dados);
+        } catch(\Exception $e) {
+            throw new \RuntimeException('Erro ao processa a transferência');            
+        }
+    }
 }
