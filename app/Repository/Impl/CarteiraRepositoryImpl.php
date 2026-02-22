@@ -18,4 +18,9 @@ class CarteiraRepositoryImpl implements CarteiraRepository
     {
         return $this->model->create($dados);   
     }
+
+    public function buscar(int $id): Carteira | null 
+    {
+        return $this->model->find($id);
+    }
 }

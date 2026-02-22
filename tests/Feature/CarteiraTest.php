@@ -41,8 +41,8 @@ class CarteiraTest extends TestCase
 
     public function test_BuscarCarteiraSucesso(): void 
     {
-
         $id = 1;
+
         $dados = [
             'id' => 1,
             'user_id' => 1,
@@ -51,13 +51,18 @@ class CarteiraTest extends TestCase
             'saldo' => 100            
         ];
 
-        $mock = Mockery::mock('alias:' . CarteiraService::class);
+        $mock = Mockery::mock(CarteiraRepository::class);
+
         $mock->shouldReceive('buscar')
             ->once()    
             ->with($id)        
-            ->andReturn((object) $dados);
+            ->andReturn(new Carteira($dados));
 
-       $result = CarteiraService::buscar($id);
+        $this->app->instance(CarteiraRepository::class, $mock);
+
+        $service = app(CarteiraService::class);
+
+        $result = $service->buscar($id);
 
         $this->assertEquals(1,$result->id);
         $this->assertEquals(1,$result->user_id);

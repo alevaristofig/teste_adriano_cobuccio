@@ -23,26 +23,16 @@ class CarteiraService {
         }
     }
 
-    /*public function listar(): Collection 
-    {
-        try {     
-            //pegar id da sessão                   
-            return $this->model->all();
-        } catch(\Exception $e) {
-            throw new Exception($e->getMessage);
-        }
-    }
-
      public function buscar(int $id): Carteira | null 
      {
         try {
-            return $this->model->find($id);
+            return $this->repository->buscar($id);
         } catch(\Exception $e) {
             throw new Exception($e->getMessage);
         }
     }
 
-    public function atualizar(int $id, CarteiraRequest $request): Carteira 
+    /*public function atualizar(int $id, CarteiraRequest $request): Carteira 
     {
         try {
             $carteira = $this->model->find($id);
