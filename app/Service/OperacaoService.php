@@ -15,6 +15,11 @@ class OperacaoService
         $this->repositorio = $repositorio;
     }
 
+    public function listar(int $carteira_id): Collection 
+    {
+        return $this->repositorio->listar($carteira_id);
+    }
+
     public function depositar(array $dados): Operacao 
     {
         try {
