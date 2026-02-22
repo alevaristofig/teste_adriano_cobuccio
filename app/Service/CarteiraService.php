@@ -3,26 +3,27 @@
 namespace App\Service;
 
 use App\Models\Carteira;
-use App\Http\Requests\CarteiraRequest;
+use App\Repository\CarteiraRepository;
 
-class CarteiraService implements CarteiraRepository {
-    private $model;
+class CarteiraService {
 
-    public function __construct(Carteira $carteira) 
+    private $repository;
+
+    public function __construct(CarteiraRepository $repository) 
     {
-        $this->model = $carteira;
+        $this->repository = $repository;
     }
 
-    public function salvar(CarteiraRequest $request): Carteira 
+    public function salvar(array $dados): Carteira 
     {
         try {                                
-            return $this->model->create($request->all());             
+            return $this->repository->salvar($dados);             
         } catch(\Exception $e) {
             throw new Exception($e->getMessage);
         }
     }
 
-    public function listar(): Collection 
+    /*public function listar(): Collection 
     {
         try {     
             //pegar id da sessão                   

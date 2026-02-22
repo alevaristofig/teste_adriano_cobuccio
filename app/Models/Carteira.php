@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Carteira extends Model
 {
     protected $fillable = [
-        'numero', 'valor', 'status', 'created_at'
+        'numero', 'titular', 'saldo', 'status', 'created_at'
     ];
 
     public function users(): BelongsTo {

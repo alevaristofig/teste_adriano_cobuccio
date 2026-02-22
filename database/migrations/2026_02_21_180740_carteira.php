@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('numero');
             $table->string('titular');
             $table->double('saldo');
+            $table->double('valorNegativo');
             
             $table->timestamps();
 
