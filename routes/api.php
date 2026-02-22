@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\Auth\LoginJwtController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CarteiraController;
 
 
 Route::get('/user', function (Request $request) {
@@ -18,14 +19,15 @@ Route::prefix('carteira')->group(function() {
 
     Route::post('/usuarios',[UserController::class,'salvar']);
 
-    /*Route::group([
-        'as' => 'usuario',
+    Route::group([
+        'as' => 'carteira',
         //'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {      
+        Route::post('/carteiras',[CarteiraController::class,'salvar']);
        // Route::get('/produto',[ProdutoController::class,'listar']);
         
        // Route::put('/produto/{id}',[ProdutoController::class,'atualizar']);
        // Route::get('/produto/{id}',[ProdutoController::class,'buscar']);
        // Route::delete('/produto/{id}',[ProdutoController::class,'deletar']);
-    });*/
+    });
 });
