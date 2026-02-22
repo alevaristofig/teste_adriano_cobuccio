@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Mockery;
 
+use App\Service\OperacaoService;
+use App\Models\Operacao;
+
 class OperacaoTest extends TestCase
 {
     public function test_depositar(): void
