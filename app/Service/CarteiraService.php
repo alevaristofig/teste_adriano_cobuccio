@@ -55,28 +55,5 @@ class CarteiraService {
             //verificar se é possivel
             //return false;
         }
-    }
-
-   /* 
-
-    public function transferir(CarteiraRequest $request): Carteira 
-    {
-        try {
-            $carteira = $this->buscarSaldo($request->id,$request->numero);
-
-            if($carteira->saldo < 0) {
-                //TO DO
-                //retiar o valor do deposito e mandar uma mensagem
-                $request->valor+= $carteira->saldo;
-
-                //depositar para a carteira que vai redeber o valor
-                //retirar da carteira que fez a transferencia;
-
-            }
-        } catch(\Exception $e) {
-            throw new Exception($e->getMessage);
-        }
-    }
-
-   */
+    }*/
 }

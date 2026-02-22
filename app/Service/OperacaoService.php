@@ -30,7 +30,7 @@ class OperacaoService
         try {
             return $this->repositorio->depositar($dados);
         } catch(\Exception $e) {
-            throw new \RuntimeException('Erro ao processa depósito');
+            throw new \RuntimeException('Erro ao processar depósito');
         }
     }
 
