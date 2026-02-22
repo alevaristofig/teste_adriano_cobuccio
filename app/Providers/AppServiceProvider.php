@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Repository\UsuarioRepository;
+use App\Repository\Impl\UserRepositoryImpl;
 use App\Repository\CarteiraRepository;
 use App\Repository\Impl\CarteiraRepositoryImpl;
 use App\Repository\OperacaoRepository;
@@ -17,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
+            UsuarioRepository::class,
+            UserRepositoryImpl::class,
             CarteiraRepository::class,
             CarteiraRepositoryImpl::class,
             OperacaoRepository::class,

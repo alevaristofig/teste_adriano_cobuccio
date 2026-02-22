@@ -15,10 +15,9 @@ class UserRepositoryImpl implements UsuarioRepository
     }
 
     public function salvar(array $dados): User 
-    {
-        //$data = $request->all();                 
-       // $data['password'] = bcrypt($data['password']);     
+    {                 
+        $dados['password'] = bcrypt($dados['password']);     
                              
-        return $this->user->create($dados);            
+        return $this->model->create($dados);            
     }
 }

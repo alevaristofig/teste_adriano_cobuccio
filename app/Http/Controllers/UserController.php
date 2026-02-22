@@ -17,7 +17,8 @@ class UserController extends Controller
     }
 
     public function salvar(UserRequest $dados): JsonResponse 
-    {                                  
-        return $this->service->salvar($dados->all());            
+    {                                
+        //return $this->service->salvar($dados->all());
+        return response()->json($this->service->salvar($dados->all()),200);            
     }
 }
