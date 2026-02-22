@@ -32,4 +32,13 @@ class OperacaoService
             throw new \RuntimeException('Erro ao processa a transferência');            
         }
     }
+
+    public function revisar(int $id, string $msg): bool
+    {
+        try {                              
+            return $this->repositorio->revisar($id, $msg);
+        } catch(\Exception $e) {
+            throw new \RuntimeException('Erro ao processa a revisão');            
+        }
+    }
 }

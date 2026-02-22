@@ -46,6 +46,15 @@ class OperacaoRepositoryImpl implements OperacaoRepository
         return true;
     }
 
+    public function revisar(int $id, string $msg): bool
+    {
+        $operacao = $this->modelOperacao->find($id);
+
+        $operacao->descricao = $msg;
+
+        return $operacao->save();
+    }
+
     private function buscarCarteira(int $userId): int 
     {
         return $this->model->where('user_id',$userId)->where('numero',$numero)->get();

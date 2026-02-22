@@ -65,6 +65,26 @@ class OperacaoTest extends TestCase
         $result = $service->transferir($dados);
        
         $this->assertTrue($result);
-       // $this->assertEquals(1,$result->user_id);
+    }
+
+    public function test_revisar(): void 
+    {
+        $id = 1;
+        $msg = "Teste";
+
+        $mock = Mockery::mock(OperacaoRepository::class);
+
+        $mock->shouldReceive('revisar')
+                ->once()
+                ->with($id,$msg)
+                ->andReturn(true);
+
+        $this->app->instance(OperacaoRepository::class, $mock);
+
+        $service = app(OperacaoService::class);
+
+        $result = $service->revisar($id,$msg);
+
+        $this->assertTrue($result);
     }
 }
