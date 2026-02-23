@@ -23,8 +23,7 @@ class OperacaoRequest extends FormRequest
     {
         return [
             'carteira_id' => "required",
-            'tipo_operacao' => "required",
-            'descricao' => "required",
+            'tipo_operacao' => "required",            
             'valor' => "required",
             'status' => "required"
         ];

@@ -85,7 +85,7 @@ class OperacaoRepositoryImpl implements OperacaoRepository
     private function montarDadosOperacao(Collection $dados) {
         return [
             'carteira_id' => $dados[0]->id,
-            'descricao' => "transferencia",
+            'tipo_operacao' => "transferência",
             'valor' => $dados[0]->saldo,
             'status' => $dados[0]->status
         ];
