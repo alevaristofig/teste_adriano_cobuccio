@@ -22,7 +22,7 @@ return new class extends Migration
             
             $table->timestamps();
 
-            $table->foreign('carteira_id')->references('id')->on('carteira');
+            $table->foreign('carteira_id')->references('id')->on('carteiras');
         });
     }
 

@@ -33,7 +33,18 @@ class OperacaoService
     public function depositar(array $dados): Operacao 
     {
         try {
-            return $this->repositorio->depositar($dados);
+            return DB::transaction(function () use ($dados) {                
+                $carteira = $this->carteiraService->buscarCarteiraPagador(auth('api')->user()->id);
+                $valor = (double) ($dados['valor']);                
+                $valor = $valor - $carteira[0]->valorNegativo;
+               
+                $carteira[0]->valorNegativo = 0;
+                $carteira[0]->saldo+= $valor;
+
+                $this->carteiraService->atualizar($carteira);
+                        
+                return $this->repositorio->depositar($dados);
+            });   
         } catch(\Exception $e) {            
             throw new \RuntimeException('Erro ao processar depósito');
         }

@@ -1,0 +1,61 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-carteirafinanceira
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - carteiranet
+
+  web:
+    image: nginx:stable
+    container_name: laravel-carteiranginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - carteiranet
+
+  db:
+    image: mariadb:10.6
+    container_name: laravel-carteirafinanceiradb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: carteira_financeira
+      MYSQL_USER: usercarteira
+      MYSQL_PASSWORD: laravelcarteira
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - carteiranet
+
+  frontend:
+    container_name: react-frontend-carteira
+    build:
+      context: ../carteira_financeira_front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    networks:
+      - carteiranet
+
+volumes:
+  dbdata:
+
+networks:
+  carteiranet:
+    driver: bridge

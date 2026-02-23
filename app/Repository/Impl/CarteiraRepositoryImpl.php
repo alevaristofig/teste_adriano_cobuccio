@@ -39,7 +39,7 @@ class CarteiraRepositoryImpl implements CarteiraRepository
     {       
         return $this->model->updateOrCreate(
             ['id' => $dados[0]->id],
-            ['saldo' => $dados[0]->saldo]
+            ['saldo' => $dados[0]->saldo, 'valorNegativo' => $dados[0]->valorNegativo]
         );
     }
 }

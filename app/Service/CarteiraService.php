@@ -33,8 +33,7 @@ class CarteiraService {
     {
         try {            
             return $this->repository->atualizar($dados);
-        } catch(\Exception $e) {
-            dd($e->getMessage());
+        } catch(\Exception $e) {            
              throw new \RuntimeException('Erro ao atualizar a carteira');   
         }
     }
