@@ -24,4 +24,22 @@ class CarteiraRepositoryImpl implements CarteiraRepository
     {       
         return $this->model->where('user_id',$id)->get();
     }
+
+    public function buscarCarteiraPagador(int $userId): Collection 
+    {
+        return $this->model->where('user_id',$userId)->get();
+    }
+
+    public function buscarCarteiraRecebedor(int $id): Collection 
+    {
+        return $this->model->where('id',$id)->get();
+    }
+
+    public function atualizar(Collection $dados): Carteira 
+    {       
+        return $this->model->updateOrCreate(
+            ['id' => $dados[0]->id],
+            ['saldo' => $dados[0]->saldo]
+        );
+    }
 }

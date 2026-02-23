@@ -19,8 +19,7 @@ class CarteiraService {
     {
         try {                                
             return $this->repository->salvar($dados);             
-        } catch(\Exception $e) {
-            dd($e->getMessage());
+        } catch(\Exception $e) {            
             throw new \RuntimeException('Erro ao cadastrar a carteira');   
         }
     }
@@ -34,12 +33,23 @@ class CarteiraService {
         }
     }
 
-    public function atualizar(int $id, array $dados): Carteira 
+    public function atualizar(Collection $dados): Carteira 
     {
         try {            
-            return $this->repository->atualizar($id,$dados);
+            return $this->repository->atualizar($dados);
         } catch(\Exception $e) {
+            dd($e->getMessage());
              throw new \RuntimeException('Erro ao processa a revisão');   
         }
+    }
+
+    public function buscarCarteiraPagador(int $id): Collection 
+    {
+        return $this->repository->buscarCarteiraPagador($id);      
+    }
+
+    public function buscarCarteiraRecebedor(int $id): Collection 
+    {
+        return $this->repository->buscarCarteiraRecebedor($id);            
     }
 }

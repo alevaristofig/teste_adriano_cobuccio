@@ -38,22 +38,10 @@ class OperacaoRepositoryImpl implements OperacaoRepository
        return $this->model->create($dados);
     }
 
-    //Refatorar
-    public function transferir(array $dados): bool
+    public function transferir(array $dados, array $dadosUsuarios): bool
     {        
-        $carteiraRecebedor = $this->buscarCarteiraRecebedor($dados['carteira_id']);      
-        $carteiraPagador = $this->buscarCarteiraPagador(auth('api')->user()->id);      
-
-        if($carteiraPagador[0]->saldo < 0) {
-                $carteiraPagador[0]->status = "Pendência";
-                $carteiraPagador[0]->valorNegativo = $dados['valor'];
-        } else {
-           $carteiraRecebedor[0]->status = "Concluído";
-           $carteiraPagador[0]->status = "Concluído";
-        }
-
-        $carteiraRecebedor[0]->saldo+= $dados['valor'];               
-        $carteiraPagador[0]->saldo-= $dados['valor'];        
+        $carteiraRecebedor = $dadosUsuarios[0];
+        $carteiraPagador = $dadosUsuarios[1];                                
 
         $this->model->create($this->montarDadosOperacao($carteiraRecebedor));
         $this->model->create($this->montarDadosOperacao($carteiraPagador));
@@ -70,17 +58,7 @@ class OperacaoRepositoryImpl implements OperacaoRepository
         $operacao->status = "Pendente";
 
         return $operacao->save();
-    }
-
-    private function buscarCarteiraPagador(int $userId): Collection 
-    {
-        return $this->modelCarteira->where('user_id',$userId)->get();
-    }
-
-    private function buscarCarteiraRecebedor(int $id): Collection 
-    {
-        return $this->modelCarteira->where('id',$id)->get();
-    }
+    }    
 
     private function montarDadosOperacao(Collection $dados) {
         return [
