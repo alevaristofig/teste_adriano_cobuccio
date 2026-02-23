@@ -2,29 +2,31 @@
 
 namespace App\Repository\Impl;
 
+use Illuminate\Database\Eloquent\Collection;
+
 use App\Repository\OperacaoRepository;
 use App\Models\Operacao;
 use App\Models\Carteira;
 
 class OperacaoRepositoryImpl implements OperacaoRepository
 {
-    private $modelOperacao;
+    private $model;
     private $modelCarteira;
 
     public function __construct(Operacao $operacao, Carteira $carteira) 
     {
-        $this->modelOperacao = $operacao;
+        $this->model = $operacao;
         $this->modelCarteira = $carteira;
     }
 
-    public function listar(int $carteira_id): Collection 
+    /*public function listar(int $carteira_id): Collection 
     {
         $this->model->modelOperacao->where('carteira_id', $carteira_id);
-    }
+    }*/
 
     public function buscar(int $id): Operacao 
     {
-        return  $this->model->modelOperacao->find($id);
+        return  $this->model->find($id);
     }
 
     public function depositar(array $dados): Operacao 
@@ -32,26 +34,26 @@ class OperacaoRepositoryImpl implements OperacaoRepository
        return $this->model->create($dados);
     }
 
+    //Refatorar
     public function transferir(array $dados): bool
-    {
-        $carteiraRecebedor = $this->buscarSaldo($dados->user_id);
-        $carteiraPagador = $this->buscarSaldo(auth('api')->user()->id);      
+    {        
+        $carteiraRecebedor = $this->buscarCarteiraRecebedor($dados['carteira_id']);      
+        $carteiraPagador = $this->buscarCarteiraPagador(auth('api')->user()->id);      
 
-        if($carteiraPagador->saldo < 0) {
-                $carteiraPagador->status = "Pendência";
+        if($carteiraPagador[0]->saldo < 0) {
+                $carteiraPagador[0]->status = "Pendência";
+                $carteiraPagador[0]->valorNegativo = $dados['valor'];
         } else {
-           $carteiraRecebedor->status = "Concluído";
-           $carteiraPagador->status = "Concluído";
+           $carteiraRecebedor[0]->status = "Concluído";
+           $carteiraPagador[0]->status = "Concluído";
         }
 
-        $carteiraRecebedor->saldo+= $dados->valor;         
-        $carteiraPagador->saldo-= $dados->valor;
-        
-        $carteiraRecebedor->save();
-        $carteiraPagador->save();
+        $carteiraRecebedor[0]->saldo+= $dados['valor'];               
+        $carteiraPagador[0]->saldo-= $dados['valor'];        
 
-        $this->modelOperacao->create($this->montarDadosOperacao($carteiraRecebedor));
-        $this->modelOperacao->create($this->montarDadosOperacao($carteiraPagador));
+        $this->model->create($this->montarDadosOperacao($carteiraRecebedor));
+        $this->model->create($this->montarDadosOperacao($carteiraPagador));
+
 
         return true;
     }
@@ -65,17 +67,22 @@ class OperacaoRepositoryImpl implements OperacaoRepository
         return $operacao->save();
     }
 
-    private function buscarCarteira(int $userId): int 
+    private function buscarCarteiraPagador(int $userId): Collection 
     {
-        return $this->model->where('user_id',$userId)->where('numero',$numero)->get();
+        return $this->modelCarteira->where('user_id',$userId)->get();
     }
 
-    private function montarDadosOperacao(array $dados) {
+    private function buscarCarteiraRecebedor(int $id): Collection 
+    {
+        return $this->modelCarteira->where('id',$id)->get();
+    }
+
+    private function montarDadosOperacao(Collection $dados) {
         return [
-            'carteira_id' => $dados->id,
+            'carteira_id' => $dados[0]->id,
             'descricao' => "transferencia",
-            'valor' => $dados->saldo,
-            'status' => $dados->status   
+            'valor' => $dados[0]->saldo,
+            'status' => $dados[0]->status
         ];
     }
 }

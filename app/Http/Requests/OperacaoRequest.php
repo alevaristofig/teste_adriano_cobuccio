@@ -25,7 +25,7 @@ class OperacaoRequest extends FormRequest
             'carteira_id' => "required",
             'descricao' => "required",
             'valor' => "required",
-            'status' => 'required' 
+            'status' => "required"
         ];
     }
 }

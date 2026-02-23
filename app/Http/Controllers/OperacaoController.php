@@ -19,4 +19,9 @@ class OperacaoController extends Controller
     {
         return response()->json($this->service->depositar($dados->all()),200);       
     }
+
+    public function transferir(OperacaoRequest $dados): JsonResponse 
+    {
+        return response()->json($this->service->transferir($dados->all()),200);          
+    }
 }

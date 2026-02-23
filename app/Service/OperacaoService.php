@@ -30,6 +30,7 @@ class OperacaoService
         try {
             return $this->repositorio->depositar($dados);
         } catch(\Exception $e) {
+            dd($e->getMessage());
             throw new \RuntimeException('Erro ao processar depósito');
         }
     }
@@ -39,6 +40,7 @@ class OperacaoService
         try {                              
             return $this->repositorio->transferir($dados);
         } catch(\Exception $e) {
+            dd($e->getMessage());
             throw new \RuntimeException('Erro ao processa a transferência');            
         }
     }

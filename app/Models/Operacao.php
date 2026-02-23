@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Operacao extends Model
 {
+    protected $table = 'operacao';
+
     protected $fillable = [
         'carteira_id', 'descricao', 'status', 'valor', 'created_at'
     ];
