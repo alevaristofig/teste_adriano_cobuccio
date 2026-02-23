@@ -43,7 +43,7 @@ class OperacaoService
     {
         try {    
             return DB::transaction(function () use ($dados) {
-                $carteiraRecebedor = $this->carteiraService->buscarCarteiraRecebedor($dados['carteira_id']);                          
+                $carteiraRecebedor = $this->carteiraService->buscarCarteiraRecebedor($dados['carteira_ids']);                          
                 $carteiraPagador = $this->carteiraService->buscarCarteiraPagador(auth('api')->user()->id); 
 
                 if($carteiraPagador[0]->saldo < 0) 
@@ -77,7 +77,7 @@ class OperacaoService
     public function revisar(array $dados): bool
     {
         try {                                        
-            return $this->repositorio->revisar($dados);
+            return $this->repositorio->revisar($dadoss);
         } catch(\Exception $e) {            
             throw new \RuntimeException('Erro ao processa a revisão');            
         }

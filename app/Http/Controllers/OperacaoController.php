@@ -28,16 +28,29 @@ class OperacaoController extends Controller
 
     public function depositar(OperacaoRequest $dados): JsonResponse 
     {
-        return response()->json($this->service->depositar($dados->all()),200);       
+        try {
+            return response()->json($this->service->depositar($dados->all()),200);
+        } catch(\RuntimeException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }               
     }
 
     public function transferir(OperacaoRequest $dados): JsonResponse 
     {
-        return response()->json($this->service->transferir($dados->all()),200);          
+        try {
+            return response()->json($this->service->transferir($dados->all()),200);
+        } catch(\RuntimeException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+                  
     }
 
     public function revisar(OperacaoRevisaoRequest $dados): JsonResponse
     {
-        return response()->json($this->service->revisar($dados->all()),200);  
+        try {
+            return response()->json($this->service->revisar($dados->all()),200);
+        } catch(\RuntimeException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }          
     }
 }
