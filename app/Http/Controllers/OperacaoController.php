@@ -15,6 +15,12 @@ class OperacaoController extends Controller
         $this->service = $service;
     }
 
+    public function listar(int $id): JsonResponse 
+    {
+        return response()->json($this->service->listar($id),200); 
+    }
+
+
     public function depositar(OperacaoRequest $dados): JsonResponse 
     {
         return response()->json($this->service->depositar($dados->all()),200);       

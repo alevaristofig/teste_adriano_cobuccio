@@ -39,7 +39,7 @@ Route::prefix('carteira')->group(function() {
     ], function() {      
         Route::post('/operacoes/depositar',[OperacaoController::class,'depositar']);
         Route::post('/operacoes/transferir',[OperacaoController::class,'transferir']);
-       // Route::get('/carteiras/{id}',[CarteiraController::class,'buscar']);
+        Route::get('/operacoes/{id}',[OperacaoController::class,'listar']);
        // Route::get('/produto',[ProdutoController::class,'listar']);
         
        // Route::put('/produto/{id}',[ProdutoController::class,'atualizar']);

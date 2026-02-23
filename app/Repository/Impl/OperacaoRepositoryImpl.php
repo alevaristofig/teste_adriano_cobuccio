@@ -19,10 +19,14 @@ class OperacaoRepositoryImpl implements OperacaoRepository
         $this->modelCarteira = $carteira;
     }
 
-    /*public function listar(int $carteira_id): Collection 
+    public function listar(int $id): Collection 
     {
-        $this->model->modelOperacao->where('carteira_id', $carteira_id);
-    }*/
+        return $this->model->whereHas('carteira', function($query) use ($id) {
+            $query->where('user_id', $id);
+        })
+        ->with('carteira')
+        ->get();
+    }
 
     public function buscar(int $id): Operacao 
     {

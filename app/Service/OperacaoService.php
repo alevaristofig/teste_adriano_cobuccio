@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use Illuminate\Database\Eloquent\Collection;
+
 use App\Repository\OperacaoRepository;
 use App\Http\Requests\OperacaoRequest;
 use App\Models\Operacao;
@@ -15,9 +17,9 @@ class OperacaoService
         $this->repositorio = $repositorio;
     }
 
-    public function listar(int $carteira_id): Collection 
+    public function listar(int $id): Collection 
     {
-        return $this->repositorio->listar($carteira_id);
+        return $this->repositorio->listar($id);
     }
 
     public function buscar(int $id): Operacao 
