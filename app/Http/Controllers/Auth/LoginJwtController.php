@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 
 class LoginJwtController extends Controller
 {
-    public function login(Request $request): JsonResponse {        
+    public function login(Request $request): JsonResponse {                
         $credentials = $request->all(['email', 'password']);
 
         Validator::make($credentials, [
