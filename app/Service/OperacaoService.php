@@ -22,7 +22,7 @@ class OperacaoService
         return $this->repositorio->listar($id);
     }
 
-    public function buscar(int $id): Operacao 
+    public function buscar(int $id): Collection 
     {
         return $this->repositorio->buscar($id);
     }

@@ -28,9 +28,9 @@ class OperacaoRepositoryImpl implements OperacaoRepository
         ->get();
     }
 
-    public function buscar(int $id): Operacao 
+    public function buscar(int $id): Collection 
     {
-        return  $this->model->find($id);
+        return  $this->model->where('id',$id)->get();
     }
 
     public function depositar(array $dados): Operacao 

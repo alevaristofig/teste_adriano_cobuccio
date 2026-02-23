@@ -42,20 +42,4 @@ class CarteiraService {
              throw new \RuntimeException('Erro ao processa a revisão');   
         }
     }
-
- /*   public function deletar(int $id): boolean 
-    {
-        try {
-            $carteira = $this->model->find($id);
-
-            $carteira->delete();
-
-            return true;
-        } catch(\Exception $e) {
-            throw new Exception($e->getMessage);
-
-            //verificar se é possivel
-            //return false;
-        }
-    }*/
 }
