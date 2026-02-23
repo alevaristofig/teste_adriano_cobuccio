@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OperacaoRequest extends FormRequest
+class OperacaoRevisaoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class OperacaoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'carteira_id' => "required",
-            'tipo_operacao' => "required",
+            'id' => "required",
             'descricao' => "required",
-            'valor' => "required",
-            'status' => "required"
         ];
     }
 }

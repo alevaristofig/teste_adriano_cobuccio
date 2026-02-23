@@ -47,11 +47,11 @@ class OperacaoService
         }
     }
 
-    public function revisar(int $id, string $msg): bool
+    public function revisar(array $dados): bool
     {
-        try {                              
-            return $this->repositorio->revisar($id, $msg);
-        } catch(\Exception $e) {
+        try {                                        
+            return $this->repositorio->revisar($dados);
+        } catch(\Exception $e) {            
             throw new \RuntimeException('Erro ao processa a revisão');            
         }
     }

@@ -15,9 +15,10 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('carteira_id'); 
 
-            $table->string('descricao');
+            $table->string('tipo_operacao');           
             $table->string('status');
-            $table->double('valor');            
+            $table->double('valor');  
+            $table->string('descricao');          
             
             $table->timestamps();
 

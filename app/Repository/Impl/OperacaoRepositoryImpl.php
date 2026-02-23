@@ -62,11 +62,12 @@ class OperacaoRepositoryImpl implements OperacaoRepository
         return true;
     }
 
-    public function revisar(int $id, string $msg): bool
+    public function revisar(array $dados): bool
     {
-        $operacao = $this->modelOperacao->find($id);
+        $operacao = $this->model->find($dados['id']);
 
-        $operacao->descricao = $msg;
+        $operacao->descricao = $dados['descricao'];
+        $operacao->status = "Pendente";
 
         return $operacao->save();
     }

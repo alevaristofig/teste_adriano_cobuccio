@@ -10,7 +10,7 @@ class Operacao extends Model
     protected $table = 'operacao';
 
     protected $fillable = [
-        'carteira_id', 'descricao', 'status', 'valor', 'created_at'
+        'carteira_id', 'tipo_operacao', 'descricao', 'status', 'valor', 'created_at'
     ];
 
     public function carteira(): BelongsTo {

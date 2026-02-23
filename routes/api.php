@@ -22,15 +22,10 @@ Route::prefix('carteira')->group(function() {
 
     Route::group([
         'as' => 'carteira',
-        //'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
+        'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {      
         Route::post('/carteiras',[CarteiraController::class,'salvar']);
         Route::get('/carteiras/{id}',[CarteiraController::class,'buscar']);
-       // Route::get('/produto',[ProdutoController::class,'listar']);
-        
-       // Route::put('/produto/{id}',[ProdutoController::class,'atualizar']);
-       // Route::get('/produto/{id}',[ProdutoController::class,'buscar']);
-       // Route::delete('/produto/{id}',[ProdutoController::class,'deletar']);
     });
 
     Route::group([
@@ -39,11 +34,8 @@ Route::prefix('carteira')->group(function() {
     ], function() {      
         Route::post('/operacoes/depositar',[OperacaoController::class,'depositar']);
         Route::post('/operacoes/transferir',[OperacaoController::class,'transferir']);
-        Route::get('/operacoes/{id}',[OperacaoController::class,'listar']);
-       // Route::get('/produto',[ProdutoController::class,'listar']);
-        
-       // Route::put('/produto/{id}',[ProdutoController::class,'atualizar']);
-       // Route::get('/produto/{id}',[ProdutoController::class,'buscar']);
-       // Route::delete('/produto/{id}',[ProdutoController::class,'deletar']);
+        Route::get('/operacoes/listar/{id}',[OperacaoController::class,'listar']);
+        Route::get('/operacoes/buscar/{id}',[OperacaoController::class,'buscar']);
+        Route::post('/operacoes/revisar',[OperacaoController::class,'revisar']);
     });
 });
