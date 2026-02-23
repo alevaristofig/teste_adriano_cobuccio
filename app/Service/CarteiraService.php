@@ -24,13 +24,9 @@ class CarteiraService {
         }
     }
 
-     public function buscar(int $id): Collection | null 
-     {
-        try {
-            return $this->repository->buscar($id);
-        } catch(\Exception $e) {
-             throw new \RuntimeException('Erro ao processa a revisão');   
-        }
+    public function buscar(int $id): Collection | null 
+    {
+        return $this->repository->buscar($id);
     }
 
     public function atualizar(Collection $dados): Carteira 
@@ -39,7 +35,7 @@ class CarteiraService {
             return $this->repository->atualizar($dados);
         } catch(\Exception $e) {
             dd($e->getMessage());
-             throw new \RuntimeException('Erro ao processa a revisão');   
+             throw new \RuntimeException('Erro ao atualizar a carteira');   
         }
     }
 

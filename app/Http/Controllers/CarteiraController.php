@@ -22,6 +22,10 @@ class CarteiraController extends Controller
 
     public function salvar(CarteiraRequest $dados): JsonResponse 
     {
-        return response()->json($this->service->salvar($dados->all()),200); 
+        try {
+            return response()->json($this->service->salvar($dados->all()),200); 
+        } catch(\RuntimeException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }          
     }
 }
