@@ -2,6 +2,7 @@
 
 namespace App\Repository\Impl;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Repository\CarteiraRepository;
 use App\Models\Carteira;
 
@@ -19,9 +20,9 @@ class CarteiraRepositoryImpl implements CarteiraRepository
         return $this->model->create($dados);   
     }
 
-    public function buscar(int $id): Carteira | null 
+    public function buscar(int $id): Collection | null 
     {
-        return $this->model->find($id);
+        return $this->model->find($id)->get();
     }
 
     public function atualizar(int $id, array $dados): Carteira 

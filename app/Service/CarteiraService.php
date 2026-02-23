@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Models\Carteira;
 use App\Repository\CarteiraRepository;
 
@@ -19,16 +20,17 @@ class CarteiraService {
         try {                                
             return $this->repository->salvar($dados);             
         } catch(\Exception $e) {
-            throw new Exception($e->getMessage);
+            dd($e->getMessage());
+            throw new \RuntimeException('Erro ao cadastrar a carteira');   
         }
     }
 
-     public function buscar(int $id): Carteira | null 
+     public function buscar(int $id): Collection | null 
      {
         try {
             return $this->repository->buscar($id);
         } catch(\Exception $e) {
-            throw new Exception($e->getMessage);
+             throw new \RuntimeException('Erro ao processa a revisão');   
         }
     }
 
@@ -37,7 +39,7 @@ class CarteiraService {
         try {            
             return $this->repository->atualizar($id,$dados);
         } catch(\Exception $e) {
-            throw new Exception($e->getMessage);
+             throw new \RuntimeException('Erro ao processa a revisão');   
         }
     }
 

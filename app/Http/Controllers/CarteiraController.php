@@ -15,7 +15,12 @@ class CarteiraController extends Controller
         $this->service = $service;
     }
 
-    public function salvar(array $dados): Carteira 
+    public function buscar(int $id): JsonResponse 
+    {
+        return response()->json($this->service->buscar($id),200);         
+    }
+
+    public function salvar(CarteiraRequest $dados): JsonResponse 
     {
         return response()->json($this->service->salvar($dados->all()),200); 
     }

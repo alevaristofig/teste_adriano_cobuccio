@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Api\Auth\LoginJwtController;
+use App\Http\Controllers\Auth\LoginJwtController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarteiraController;
 
@@ -24,6 +24,7 @@ Route::prefix('carteira')->group(function() {
         //'middleware'=> \Tymon\JWTAuth\Http\Middleware\Authenticate::class
     ], function() {      
         Route::post('/carteiras',[CarteiraController::class,'salvar']);
+        Route::get('/carteiras/{id}',[CarteiraController::class,'buscar']);
        // Route::get('/produto',[ProdutoController::class,'listar']);
         
        // Route::put('/produto/{id}',[ProdutoController::class,'atualizar']);
