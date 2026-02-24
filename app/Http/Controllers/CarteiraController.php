@@ -25,7 +25,7 @@ class CarteiraController extends Controller
         try {
             return response()->json($this->service->salvar($dados->all()),200); 
         } catch(\RuntimeException $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['error' => $e->getMessage()], 400);
         }          
     }
 }

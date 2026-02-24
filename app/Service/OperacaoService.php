@@ -34,7 +34,7 @@ class OperacaoService
     {
         try {
             return DB::transaction(function () use ($dados) {                
-                $carteira = $this->carteiraService->buscarCarteiraPagador(auth('api')->user()->id);
+                $carteira = $this->carteiraService->buscarCarteiraRecebedor($dados['carteira_id']);                
                 $valor = (double) ($dados['valor']);                
                 $valor = $valor - $carteira[0]->valorNegativo;
                
@@ -43,9 +43,10 @@ class OperacaoService
 
                 $this->carteiraService->atualizar($carteira);
                         
+                $dados['carteira_id'] = $carteira[0]->id;                
                 return $this->repositorio->depositar($dados);
             });   
-        } catch(\Exception $e) {            
+        } catch(\Exception $e) {                                  
             throw new \RuntimeException('Erro ao processar depósito');
         }
     }
@@ -53,34 +54,40 @@ class OperacaoService
     public function transferir(array $dados): bool 
     {
         try {    
-            return DB::transaction(function () use ($dados) {
+            return DB::transaction(function () use ($dados) {                
                 $carteiraRecebedor = $this->carteiraService->buscarCarteiraRecebedor($dados['carteira_id']);                          
-                $carteiraPagador = $this->carteiraService->buscarCarteiraPagador(auth('api')->user()->id); 
+                $carteiraPagador = $this->carteiraService->buscarCarteiraPagador(auth('api')->user()->id);                 
 
                 if($carteiraPagador[0]->saldo < 0) 
                 {
-                    $carteiraPagador[0]->status = "Pendência";
+                    $dados['status'] = "Pendência";
                     $carteiraPagador[0]->valorNegativo = $dados['valor'];
-                } 
+                }
+                else if($dados['valor'] > $carteiraPagador[0]->saldo) 
+                {                  
+                    $carteiraPagador[0]->valorNegativo = $dados['valor'] - $carteiraPagador[0]->saldo;
+                    $carteiraPagador[0]->saldo = 0;                       
+                    $dados['status'] = "Pendência";
+                }
                 else 
-                {
-                    $carteiraRecebedor[0]->status = "Concluído";
-                    $carteiraPagador[0]->status = "Concluído";
+                {                   
+                    $dados['status'] = "Pendência";
+
+                    $carteiraPagador[0]->saldo-= $dados['valor'];
                 }
 
-                $carteiraRecebedor[0]->saldo+= $dados['valor'];               
-                $carteiraPagador[0]->saldo-= $dados['valor'];   
+                $carteiraRecebedor[0]->saldo+= $dados['valor'];                                 
                         
                 $operacaoUsuarios = [$carteiraRecebedor,$carteiraPagador];
 
-                $this->repositorio->transferir($dados, $operacaoUsuarios);
+                $this->repositorio->transferir($dados['status'], $operacaoUsuarios);
 
                 $this->carteiraService->atualizar($carteiraRecebedor);
                 $this->carteiraService->atualizar($carteiraPagador);
 
                 return true;
             });               
-        } catch(\Exception $e) {            
+        } catch(\Exception $e) {                               
             throw new \RuntimeException('Erro ao processa a transferência');            
         }
     }

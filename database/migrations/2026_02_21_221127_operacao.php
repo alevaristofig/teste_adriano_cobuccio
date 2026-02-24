@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tipo_operacao');           
             $table->string('status');
             $table->double('valor');  
-            $table->string('descricao');          
+            $table->string('descricao')->nullable();          
             
             $table->timestamps();
 

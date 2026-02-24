@@ -17,10 +17,10 @@ class CarteiraService {
 
     public function salvar(array $dados): Carteira 
     {
-        try {                                
+        try {                                                                
             return $this->repository->salvar($dados);             
         } catch(\Exception $e) {            
-            throw new \RuntimeException('Erro ao cadastrar a carteira');   
+            throw new \RuntimeException($e->getMessage());   
         }
     }
 

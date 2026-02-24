@@ -32,7 +32,7 @@ class CarteiraRepositoryImpl implements CarteiraRepository
 
     public function buscarCarteiraRecebedor(int $id): Collection 
     {
-        return $this->model->where('id',$id)->get();
+        return $this->model->where('numero',$id)->get();
     }
 
     public function atualizar(Collection $dados): Carteira 
