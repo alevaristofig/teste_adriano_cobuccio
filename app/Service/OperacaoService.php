@@ -54,7 +54,7 @@ class OperacaoService
     public function transferir(array $dados): bool 
     {
         try {    
-            return DB::transaction(function () use ($dados) {                
+            return DB::transaction(function () use ($dados) {                               
                 $carteiraRecebedor = $this->carteiraService->buscarCarteiraRecebedor($dados['carteira_id']);                          
                 $carteiraPagador = $this->carteiraService->buscarCarteiraPagador(auth('api')->user()->id);                 
 
@@ -80,7 +80,7 @@ class OperacaoService
                         
                 $operacaoUsuarios = [$carteiraRecebedor,$carteiraPagador];
 
-                $this->repositorio->transferir($dados['status'], $operacaoUsuarios);
+                $this->repositorio->transferir($dados, $operacaoUsuarios);
 
                 $this->carteiraService->atualizar($carteiraRecebedor);
                 $this->carteiraService->atualizar($carteiraPagador);

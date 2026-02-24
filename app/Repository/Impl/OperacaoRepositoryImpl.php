@@ -38,13 +38,13 @@ class OperacaoRepositoryImpl implements OperacaoRepository
        return $this->model->create($dados);
     }
 
-    public function transferir(string $status, array $dadosUsuarios): bool
+    public function transferir(array $dados, array $dadosUsuarios): bool
     {        
         $carteiraRecebedor = $dadosUsuarios[0];
         $carteiraPagador = $dadosUsuarios[1];                                
 
-        $this->model->create($this->montarDadosOperacao($carteiraRecebedor,$status));
-        $this->model->create($this->montarDadosOperacao($carteiraPagador,$status));
+        $this->model->create($this->montarDadosOperacao($carteiraRecebedor,$dados));
+        $this->model->create($this->montarDadosOperacao($carteiraPagador,$dados));
 
 
         return true;
@@ -60,12 +60,12 @@ class OperacaoRepositoryImpl implements OperacaoRepository
         return $operacao->save();
     }    
 
-    private function montarDadosOperacao(Collection $dados, string $status) {
+    private function montarDadosOperacao(Collection $dadosCarteira, array $dados) {
         return [
-            'carteira_id' => $dados[0]->id,
+            'carteira_id' => $dadosCarteira[0]->id,
             'tipo_operacao' => "transferência",
-            'valor' => $dados[0]->saldo,
-            'status' => $status
+            'valor' => $dados['valor'],
+            'status' => $dados['status']
         ];
     }
 }
