@@ -28,7 +28,7 @@ class UserTest extends TestCase
 
         $this->app->instance(UsuarioRepository::class, $mock);
 
-        $service = app(UsuarioRepository::class);
+        $service = app(UsuarioService::class);
 
         $result = $service->salvar($dados);
 
